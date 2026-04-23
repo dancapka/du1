@@ -1,14 +1,16 @@
 # LLM Tool Use — ukázkový skript
 
 Python skript, který zavolá LLM API (OpenAI, model `gpt-5.4-nano`) a dá mu
-k dispozici dva nástroje: **kalkulačku** a **webové vyhledávání přes DDGS**
-(DuckDuckGo). Výsledky nástrojů se vracejí zpět modelu pro finální odpověď.
+k dispozici dva nástroje: **kalkulačku** a **webové vyhledávání
+přes DuckDuckGo Search** (knihovna [`ddgs`](https://pypi.org/project/ddgs/),
+dříve známá jako `duckduckgo-search`). Výsledky nástrojů se vracejí zpět
+modelu pro finální odpověď.
 
 ## Co program dělá
 
 1. Definuje dvě lokální funkce:
    - `calculate(expression)` — bezpečně vyhodnotí aritmetický výraz.
-   - `web_search(query)` — přes knihovnu `ddgs` vyhledá na DuckDuckGo
+   - `web_search(query)` — přes **DuckDuckGo Search** (`ddgs`) vyhledá dotaz
      a vrátí top výsledky (title, href, snippet) jako JSON.
 2. Obě funkce zaregistruje jako nástroje (`tools=[...]`) s JSON schématem.
 3. Pošle dotaz modelu — např. *"Kdo je aktuálním prezidentem ČR a kolik je
@@ -40,9 +42,15 @@ uv run python tool_use.py
 
 ## Soubory
 
-- `tool_use.py` — hlavní skript s definicí nástroje a smyčkou tool-use.
+- `tool_use.py` — hlavní skript s definicí nástrojů a smyčkou tool-use.
 - `pyproject.toml`, `uv.lock` — uv projekt a lockfile.
 - `.env` — API klíč (gitignored).
+
+## Závislosti
+
+- `openai` — klient pro OpenAI Chat Completions API
+- `ddgs` — **DuckDuckGo Search** (webové vyhledávání bez API klíče)
+- `python-dotenv` — načtení `OPENAI_API_KEY` z `.env`
 
 ## Ukázkový výstup
 
